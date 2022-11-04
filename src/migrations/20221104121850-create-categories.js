@@ -5,7 +5,7 @@ return queryInterface.createTable('categories', {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTERGER
+    type: Sequelize.INTEGER
   },
   name: {
     type: Sequelize.STRING,
