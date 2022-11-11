@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const jwtUtil = require('../utils/jwt.util');
 
-const User = require('../models/User');
+const { User } = require('../models/index');
 
 const validateBody = (params) => {
     const schema = Joi.object({
@@ -23,9 +23,11 @@ const validateBody = (params) => {
         message: value });
 };
 
-const validateLogin = async ({ email, password }) => {
+const validateLogin = async (body) => {
     // access db and finds user data that matches  parameter sent
-    const user = await User.findOne({ where: { email } });
+   /*  const user = await User.findOne({ where: { email } }); */
+   const { email, password } = body;
+   const user = await User.findOne({ where: { email } });
 
     if (!user || user.password !== password) {
        return ({

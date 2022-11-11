@@ -1,5 +1,5 @@
-/* module.exports = (sequelize, DataTypes) => {
-  const PostCategoryTable = sequelize.define('PostCategory',{
+module.exports = (sequelize, DataTypes) => {
+  const PostCategory = sequelize.define('PostCategory',{
     categoryId: DataTypes.INTEGER,
     postId: DataTypes.INTEGER,
   },
@@ -24,5 +24,5 @@
     });
   }
 
-  return PostCategoryTable;
-} */
+  return PostCategory;
+}

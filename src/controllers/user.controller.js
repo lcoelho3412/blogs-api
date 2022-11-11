@@ -6,7 +6,6 @@ const login = async (req, res) => {
     if (type) {
       return res.status(400).json({ message });
     }
-    console.log(message);
     
     const { email, password } = message;
    
@@ -16,7 +15,8 @@ const login = async (req, res) => {
       return res.status(400).json({ message: token.message });
     }
 
-    res.status(200).json({ token });
+    res.status(200).json(token);
+    console.log('file: user.controller.js ~ line 19 ~ login ~ token', token);
 };
 
 module.exports = { login };
