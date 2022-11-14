@@ -1,4 +1,5 @@
 const loginService = require('../services/login.service.js');
+const userService = require('../services/user.service');
 
 const login = async (req, res) => {
     const { type, message } = loginService.validateBody(req.body);
@@ -19,4 +20,9 @@ const login = async (req, res) => {
     console.log('file: user.controller.js ~ line 19 ~ login ~ token', token);
 };
 
-module.exports = { login };
+const createUser = async (req, res) => {
+  const newUser = await userService.createUser(req.body);
+  return res.status(newUser.status).json(newUser.message);
+};
+
+module.exports = { login, createUser };
