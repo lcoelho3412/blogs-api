@@ -17,7 +17,6 @@ const login = async (req, res) => {
     }
 
     res.status(200).json(token);
-    console.log('file: user.controller.js ~ line 19 ~ login ~ token', token);
 };
 
 const createUser = async (req, res) => {
