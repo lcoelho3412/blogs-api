@@ -1,3 +1,4 @@
+const statusCode = require('../helpers/statusCode');
 const { User } = require('../models');
 const jwtUtil = require('../utils/jwt.util');
 
@@ -31,4 +32,9 @@ const createUser = async ({ displayName, email, password, image }) => {
     message: { token },
   };
 };
-module.exports = { findOne, createUser };
+
+const getUsers = async () => {
+  const userFound = await User.findAll({ attributes: { exclude: 'password' } });
+  return { status: statusCode.OK, message: userFound };
+};
+module.exports = { findOne, createUser, getUsers };
