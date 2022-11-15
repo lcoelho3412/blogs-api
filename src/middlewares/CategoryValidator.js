@@ -6,6 +6,4 @@ const nameValidador = (req, res, next) => {
   next();
 };
 
-module.exports = {
-  nameValidador,
-};
+module.exports = nameValidador;
