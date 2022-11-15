@@ -37,4 +37,12 @@ const getUsers = async () => {
   const userFound = await User.findAll({ attributes: { exclude: 'password' } });
   return { status: statusCode.OK, message: userFound };
 };
-module.exports = { findOne, createUser, getUsers };
+
+const getUserById = async (id) => {
+  const result = await User.findOne({ where: { id }, attributes: { exclude: 'password' } });
+  if (!result) {
+    return { status: statusCode.NotFound, message: { message: 'User does not exist' } };
+  }
+  return { status: statusCode.OK, message: result };
+};
+module.exports = { findOne, createUser, getUsers, getUserById };

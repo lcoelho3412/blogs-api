@@ -29,4 +29,10 @@ const getUsers = async (_req, res) => {
   return res.status(result.status).json(result.message);
 };
 
-module.exports = { login, createUser, getUsers };
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const result = await userService.getUserById(id, req.body);
+  return res.status(result.status).json(result.message);
+};
+
+module.exports = { login, createUser, getUsers, getUserById };
