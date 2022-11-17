@@ -1,4 +1,4 @@
-const nameValidador = (req, res, next) => {
+const nameValidator = (req, res, next) => {
   const { name } = req.body;
   if (!name) {
       return res.status(400).json({ message: '"name" is required' });
@@ -6,4 +6,4 @@ const nameValidador = (req, res, next) => {
   next();
 };
 
-module.exports = nameValidador;
+module.exports = nameValidator;
