@@ -2,18 +2,18 @@ const statusCode = require('../helpers/statusCode');
 const { BlogPost, PostCategory, Category } = require('../models');
 
 const createPost = async (id, { title, content, categoryIds }) => {
-  const date = new Date();
+    const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
+    if (categoryIds.length !== count) {
+        return {
+            status: statusCode.BadRequest,
+            message: { message: 'one or more "categoryIds" not found' },
+        };
+    }
   const { dataValues } = await BlogPost.create({
-      title, content, categoryIds, userId: id, published: date, updated: date,
+      title, content, categoryIds, userId: id,
   });
-  const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
+  console.log('file: post.service.js ~ line 15 ~ createPost ~ dataValues.id', dataValues.id);
 
-  if (categoryIds.length !== count) {
-      return {
-          status: statusCode.BadRequest,
-          message: { message: 'one or more "categoryIds" not found' },
-      };
-  }
   const categories = categoryIds
       .map((category) => ({ postId: dataValues.id, categoryId: category }));
   await PostCategory.bulkCreate(categories);

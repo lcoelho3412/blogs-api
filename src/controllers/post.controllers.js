@@ -5,7 +5,7 @@ const createPost = async (req, res) => {
     const data = req.body;
     const result = await postService.createPost(id, data);
     console.log('file: post.controllers.js ~ line 7 ~ createPost ~ result', result);
-    return res.status(201).json('funciona');
+    return res.status(result.status).json(result.message);
 };
 
 module.exports = { createPost };
