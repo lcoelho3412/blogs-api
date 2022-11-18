@@ -1,5 +1,5 @@
 const statusCode = require('../helpers/statusCode');
-const { BlogPost, PostCategory, Category } = require('../models');
+const { BlogPost, PostCategory, Category, User } = require('../models');
 
 const createPost = async (id, { title, content, categoryIds }) => {
     const { count } = await Category.findAndCountAll({ where: { id: categoryIds } });
@@ -20,4 +20,14 @@ const createPost = async (id, { title, content, categoryIds }) => {
   return { status: statusCode.CreatedSucess, message: dataValues };
 };
 
-module.exports = { createPost };
+const getPosts = async () => {
+    const allPosts = await BlogPost.findAll({
+        include: [
+            { model: User, as: 'user', attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories' },
+        ],
+    });
+    return { status: statusCode.OK, message: allPosts }; 
+};
+
+module.exports = { createPost, getPosts };
