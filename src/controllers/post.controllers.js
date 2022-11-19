@@ -1,4 +1,3 @@
-// cSpell:ignore validaBagaca
 const postService = require('../services/post.service');
 
 const createPost = async (req, res) => {
