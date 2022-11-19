@@ -1,3 +1,4 @@
+// cSpell:ignore middlewares
 const express = require('express');
 const postController = require('../controllers/post.controllers');
 const { tokenValidator } = require('../middlewares/tokenValidator');
@@ -10,6 +11,7 @@ router.use(tokenValidator);
 
 router.post('/', checkField, postController.createPost);
 router.get('/', postController.getPosts);
-router.get('/:id', postController.getPostByid);
+router.get('/:id', postController.getPostById);
+router.put('/:id', postController.updatePost);
 
 module.exports = router;

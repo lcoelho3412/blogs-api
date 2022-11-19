@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const statusCode = require('../helpers/statusCode');
 const { BlogPost, PostCategory, Category, User } = require('../models');
 
@@ -12,12 +13,11 @@ const createPost = async (id, { title, content, categoryIds }) => {
   const { dataValues } = await BlogPost.create({
       title, content, categoryIds, userId: id,
   });
-  console.log('file: post.service.js ~ line 15 ~ createPost ~ dataValues.id', dataValues.id);
 
   const categories = categoryIds
       .map((category) => ({ postId: dataValues.id, categoryId: category }));
   await PostCategory.bulkCreate(categories);
-  return { status: statusCode.CreatedSucess, message: dataValues };
+  return { status: statusCode.CreatedSuccess, message: dataValues };
 };
 
 const getPosts = async () => {
@@ -44,4 +44,31 @@ if (!findPostById) {
 return { status: statusCode.OK, message: findPostById };
 };
 
-module.exports = { createPost, getPosts, getPostById };
+const validateFieldUpdate = (body) => {
+    const schema = Joi.object({
+        title: Joi.string().required(),
+        content: Joi.string().required(), 
+    });
+    const validationResult = schema.validate(body);
+    const { error } = validationResult;
+    if (error) {
+        return { status: statusCode.BadRequest,
+             message: { message: 'Some required fields are missing' } };
+    }
+};
+
+const updatePost = async (id, title, content, user) => {
+    const { message: { userId } } = await getPostById(id);
+
+    if (userId !== user.id) {
+        return { status: statusCode.error401, message: { message: 'Unauthorized user' } };
+}
+ await BlogPost.update(
+        { title, content },
+        { where: { id } },
+    ); 
+
+    return getPostById(id);
+};
+
+module.exports = { createPost, getPosts, getPostById, updatePost, validateFieldUpdate };

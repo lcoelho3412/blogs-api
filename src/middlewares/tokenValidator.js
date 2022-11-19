@@ -8,6 +8,7 @@ const tokenValidator = async (req, res, next) => {
         return res.status(statusCode.error401).json({ message: 'Token not found' });
     }
     try {
+        // unencrypts user data and inserts in req.user 
         const user = loginService.validateToken(authorization);
         req.user = user;
         jwt.verify(authorization, process.env.JWT_SECRET);
