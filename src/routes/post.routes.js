@@ -12,5 +12,6 @@ router.post('/', checkField, postController.createPost);
 router.get('/', postController.getPosts);
 router.get('/:id', postController.getPostById);
 router.put('/:id', postController.updatePost);
+router.delete('/:id', postController.deletePostById);
 
 module.exports = router;

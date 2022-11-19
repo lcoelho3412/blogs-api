@@ -71,6 +71,16 @@ const updatePost = async (id, title, content, user) => {
     return getPostById(id);
 };
 
-// this is an absolute joke
+const deletePost = async (id, user) => {
+    const { message: { userId, id: postId } } = await getPostById(id);
+    if (!postId) {
+        return { status: statusCode.NotFound, message: { message: 'Post does not exist' } };
+    }
+    if (userId !== user.id) { 
+        return { status: statusCode.error401, message: { message: 'Unauthorized user' } }; 
+}
+    await BlogPost.destroy({ where: { id } });
+    return { status: statusCode.successRequestDelete, message: null };
+};
 
-module.exports = { createPost, getPosts, getPostById, updatePost, validateFieldUpdate };
+module.exports = { createPost, getPosts, getPostById, updatePost, validateFieldUpdate, deletePost };

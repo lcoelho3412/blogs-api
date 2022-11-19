@@ -45,4 +45,9 @@ const getUserById = async (id) => {
   }
   return { status: statusCode.OK, message: result };
 };
-module.exports = { findOne, createUser, getUsers, getUserById };
+
+const deleteAccount = async (id) => {
+  const result = await User.destroy({ where: { id } });
+  return result;
+};
+module.exports = { findOne, createUser, getUsers, getUserById, deleteAccount };
