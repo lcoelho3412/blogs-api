@@ -71,4 +71,6 @@ const updatePost = async (id, title, content, user) => {
     return getPostById(id);
 };
 
+// this is an absolute joke
+
 module.exports = { createPost, getPosts, getPostById, updatePost, validateFieldUpdate };
