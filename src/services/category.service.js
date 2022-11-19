@@ -3,8 +3,10 @@ const { Category } = require('../models');
 
 const createCategory = async (name) => {
     const result = await Category.create({ name });
+    
+    console.log('file: category.service.js ~ line 9 ~ createCategory ~  statusCode.CreatedSuccess', statusCode.CreatedSuccess);
     return {
-        status: statusCode.CreatedSucess,
+        status: statusCode.CreatedSuccess,
         message: result,
     };
 };
